@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application météo</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="weather.js" defer></script>
+  </head>
+<body>
+    <div id="heading">
+        <img id='imgTubo' src='https://i1.sndcdn.com/artworks-000098132835-j49ilv-t500x500.jpg' width="200px">
+        <h1>Méteo de Tubo</h1>
+    </div>
+    <div id="menu">
+			<input type="text" id="inputLocation">
+			<button type="button" id="btnDisplay" accesskey="m">Afficher</button>
+	</div>
+	<div id="data" hidden>
+        <hr id="horizontalSep">
+        <h3 id="textCity"></h3>
+        <div id="divDaySelection">
+          <button class="btnDaySelection" id="btnPrevious">Précedent</button>
+          <h4 id="textDay">J1</h4>
+          <button class="btnDaySelection" id="btnNext">Suivant</button>
+        </div>
+    </div>
+</body>
+</html>
