@@ -18,8 +18,13 @@ function init() {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    var marker = null
     map.on('click', function(e) {
         console.log("Clicked on map on " + e.latlng.toString())
+        if(marker != null) {
+            map.removeLayer(marker)
+        }
+        marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
         requestWeatherByMap(e.latlng.lat, e.latlng.lng)
     });
 
@@ -135,7 +140,7 @@ async function requestWeatherByMap(lat, lng) {
     forecastData = [data.fcst_day_0, data.fcst_day_1, data.fcst_day_2, data.fcst_day_3, data.fcst_day_4]
     hourlyData = [forecastData[0].hourly_data, forecastData[1].hourly_data, forecastData[2].hourly_data, forecastData[3].hourly_data, forecastData[4].hourly_data]
     
-    displayWeatherDiv(data)
+    displayWeatherDivByMap(lng.toFixed(2),lat.toFixed(2))
 }
 
 // Request the weather for a specific location using the text input
@@ -170,20 +175,27 @@ function displayWeatherDiv(data) {
     fullfillDiv(0)
 }
 
+function displayWeatherDivByMap(lng, lat) {
+    const dataDiv = document.getElementById("data")
+    const textCity = document.getElementById("textCity")
+
+    dataDiv.hidden = false
+    textCity.innerHTML = "Voici la méteo aux coordonnées [" + lng + " , " + lat + "]"
+    fullfillDiv(0)
+}
+
 // Fill the weather div with the data
 function fullfillDiv(day) {
     const dayText = document.getElementById("textDay")
     const minTemp = document.getElementById("minTemp")
     const maxTemp = document.getElementById("maxTemp")
     const imgWeather = document.getElementById("imgWeather")
-    const humidity = document.getElementById("humidity")
 
     if (day >= 0 && day < forecastData.length) {
         const dataSrc = forecastData[day]
         dayText.innerHTML = dataSrc.day_long
         minTemp.innerHTML = "min:" + dataSrc.tmin + "°C"
         maxTemp.innerHTML = "max:" + dataSrc.tmax + "°C"
-        humidity.innerHTML = "Humidité: " + dataSrc.rh + "%"
         imgWeather.src = dataSrc.icon_big
     } else {
         console.log("Jour invalide")
