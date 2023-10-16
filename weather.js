@@ -20,7 +20,7 @@ function init() {
 
     var marker = null
     map.on('click', function(e) {
-        console.log("Clicked on map on " + e.latlng.toString())
+        console.log("Clicked on map at " + e.latlng.toString())
         if(marker != null) {
             map.removeLayer(marker)
         }
@@ -54,7 +54,6 @@ function init() {
     btnNext.addEventListener("click", loadNextDay)
 
     timeSlider.addEventListener('input', () => {
-        console.log("Hour changed")
         hourDisplay.hidden = false
         selectedTime.textContent = `Heure : ${timeSlider.value}h`
         checkWeatheHourly(hourlyData, currentDay, timeSlider.value)
@@ -105,7 +104,7 @@ function loadNextDay(data) {
 
     currentDay++
     fullfillDiv(currentDay)
-    console.log("Loading next day" + currentDay)
+    console.log("Loading next day --> Day " + currentDay)
 }
 
 // Load the previous day using the map
@@ -119,19 +118,18 @@ function loadPreviousDay(data) {
 
     currentDay--
     fullfillDiv(currentDay)
-    console.log("Loading previous day" + currentDay)
+    console.log("Loading previous day --> Day " + currentDay)
 }
 
 // Request the weather for a specific location
 async function requestWeatherByMap(lat, lng) {
     console.log("Requesting weather for " + lat.toFixed(2) + " " + lng.toFixed(2))
-    let ans = await fetch("https://www.prevision-meteo.ch/services/json/lat=" + lat.toFixed(2) + "lng=" + lng.toFixed(2))   
+    let ans = await fetch("https://www.prevision-meteo.ch/services/json/lat=" + lat.toFixed(2) + "lng=" + lng.toFixed(2))
     let data = await ans.json()
     console.log(data)
 
     if(data.errors) {
-        console.log("City name not prout")
-        alert("Erreur lors de la requête, verifiez le nom de la ville")
+        alert("Erreur lors de la requête, la méteo n'est pas disponible à cet endroit")
         const dataDiv = document.getElementById("data")
         dataDiv.hidden = true
         return
