@@ -94,7 +94,7 @@ async function checkCityName(cityName) {
 }
 
 // Load the next day
-function loadNextDay(data) {
+function loadNextDay() {
     if(currentDay == 3) {
         const btnNext = document.getElementById("btnNext")
         btnNext.disabled = true
@@ -108,7 +108,7 @@ function loadNextDay(data) {
 }
 
 // Load the previous day using the map
-function loadPreviousDay(data) {
+function loadPreviousDay() {
     if(currentDay == 1) {
         const btnPrevious = document.getElementById("btnPrevious")
         btnPrevious.disabled = true
